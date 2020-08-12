@@ -1,0 +1,111 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    social: [ "github", "menu"]
+    source_code: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(knitr)
+library(DT)
+library(rpivotTable)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(openintro)
+library(highcharter)
+library(ggvis)
+```
+
+
+```{r}
+setwd("~/Desktop/Sneha/home-credit-default-risk/Done/OG Data")
+data<-read.csv("application_train.csv")
+```
+
+```{r}
+mycolors <- c("blue", "#FFC125", "darkgreen", "darkorange")
+```
+
+Interactive Data Visualization
+=====================================
+
+
+Row
+---------------------------------------------
+
+### Customers who get loan by age
+
+```{r}
+p1 <- data%>%
+  ggplot( aes(-DAYS_BIRTH/365, colour=as.factor(TARGET)))+
+  geom_histogram(bins=30 )+
+   theme_light() + 
+   labs(title = "Age of Client", x = "Age (years)")+
+   theme(plot.title = element_text(hjust = .5))
+ggplotly(p1)
+```
+
+### Occupation
+```{r}
+p2 <- data %>%
+         group_by(OCCUPATION_TYPE) %>%
+         summarise(count = n()) %>%
+         filter(count>50) %>%
+         plot_ly(labels = ~OCCUPATION_TYPE,
+                 values = ~count,
+                 marker = list(colors = mycolors)) %>%
+         add_pie(hole = 0.2) %>%
+         layout(xaxis = list(zeroline = F,
+                             showline = F,
+                             showticklabels = F,
+                             showgrid = F),
+                yaxis = list(zeroline = F,
+                             showline = F,
+                             showticklabels=F,
+                             showgrid=F))
+p2
+```
+
+
+Row
+------------------------------------
+### Income 
+
+```{r}
+p3<-data %>%
+  filter(!is.na(NAME_INCOME_TYPE)) %>%
+  group_by(NAME_INCOME_TYPE,TARGET) %>%
+  summarise(Count = n()/nrow(data)*100) %>%
+  ungroup() %>%
+  mutate(NAME_INCOME_TYPE = reorder(NAME_INCOME_TYPE,Count)) %>%
+  mutate(TARGET = as.factor(TARGET)) %>%
+  
+  ggplot(aes(x = NAME_INCOME_TYPE,y = Count,fill= TARGET))  +
+  geom_bar(stat='identity',position=position_dodge(width=1)) +
+  geom_text(aes(x = NAME_INCOME_TYPE, y = Count+2, label = paste0("",round(Count,0),"%",sep=""),group=TARGET),
+            position=position_dodge(width=1), size=4, colour = 'black', fontface = 'plain') + labs(x = 'Income Type', y = 'Percent', title = 'Bar Chart for Visualizing Income Type')  + theme_bw() +  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  
+ggplotly(p3)
+```
+
+
+
+
+### Density plot with target values
+
+```{r}
+p4<- data %>%
+  ggplot(aes(EXT_SOURCE_1,colour=as.factor(TARGET),group=as.factor(TARGET)))+
+  geom_density()+
+  scale_x_continuous(breaks=seq(0,1,by=0.2))+
+  scale_y_continuous()+
+  theme_light() + 
+  labs(title = "Distribution of EXT_SOURCE_1 by Target Value", x = "EXT_SOURCE_1")+
+  theme(plot.title = element_text(hjust = .5))
+ggplotly(p4)
+```
