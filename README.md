@@ -59,9 +59,13 @@ pip install -r requirements.txt
 ### Contribution Guidelines
 
 * Fork the repository.
+  
 * Create a new branch for your contributions.
+
 * Make changes and commit them with descriptive messages.
+
 * Push the changes to your fork.
+
 * Submit a pull request, detailing the changes made and the improvements achieved.
 
 ### License
