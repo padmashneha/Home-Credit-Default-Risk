@@ -35,18 +35,18 @@ The final step involves evaluating the performance of the developed models using
 
 ## Getting Started
 
-* Clone the repository to your local machine.
+1. Clone the repository to your local machine.
 
 ```
 git clone https://github.com/your-username/home-credit-loan-prediction.git
 ```
 
-* Navigate to the project directory.
+2. Navigate to the project directory.
 ```
 cd home-credit-loan-prediction
 ```
 
-* Set up your virtual environment and install the required dependencies.
+3. Set up your virtual environment and install the required dependencies.
 
 ```
 virtualenv venv
@@ -54,20 +54,21 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 pip install -r requirements.txt
 ```
 
-* Follow the project pipeline outlined above, and feel free to explore additional techniques and methods to enhance the predictive models.
+4. Follow the project pipeline outlined above, and feel free to explore additional techniques and methods to enhance the predictive models.
 
-Contribution Guidelines
+### Contribution Guidelines
 
-Fork the repository.
-Create a new branch for your contributions.
-Make changes and commit them with descriptive messages.
-Push the changes to your fork.
-Submit a pull request, detailing the changes made and the improvements achieved.
-License
+* Fork the repository.
+* Create a new branch for your contributions.
+* Make changes and commit them with descriptive messages.
+* Push the changes to your fork.
+* Submit a pull request, detailing the changes made and the improvements achieved.
+
+### License
 
 This project is licensed under the MIT License.
 
-Acknowledgments
+### Acknowledgments
 
 We would like to express our gratitude to Kaggle and the Home Credit team for providing this opportunity to contribute to financial inclusion through data science.
 
